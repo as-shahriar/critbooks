@@ -97,3 +97,14 @@ nav ul li a:hover {
   color: #fff;
   opacity: 0.5;
 }
+
+@media (max-width: 800px) {
+  .left {
+    display: none;
+  }
+
+  .mycontainer {
+    display: flex;
+    justify-content: center;
+  }
+}

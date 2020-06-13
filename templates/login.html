@@ -1,4 +1,10 @@
 {% extends 'base.html' %} {% block template %}
+
+<style>
+  body {
+    background-image: url("{{url_for("static",filename="img/bg.jpg")}}");
+  }
+</style>
 <div class="mycontainer">
   <div class="left"></div>
   <div class="right">
