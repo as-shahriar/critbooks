@@ -1,0 +1,81 @@
+{%extends 'base.html'%} {%block title%}Book Name{%endblock%}{%block template%}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/book.css')}}" />
+<div class="main">
+  <div class="search-box">
+    <div>
+      <a href="{{url_for('search')}}">
+        <img src="{{url_for('static',filename='img/logo.png')}}" alt="logo"
+      /></a>
+    </div>
+
+    <input type="text" class="form-control" placeholder="Search your Book" />
+    <div><button class="btn">Search</button></div>
+  </div>
+
+  <div class="container">
+    <div class="info-section">
+      <div class="info">
+        <h2>Book Name</h2>
+        <p>Author | year | ISBN</p>
+      </div>
+      <div class="rating">
+        [logo]
+        <h4>4.5 <span>/</span> 5</h4>
+      </div>
+    </div>
+
+    <div class="myreview-box">
+      <div class="myreview">
+        <div class="mt-4 mx-4">
+          <label for="select">Rating</label>
+          <select id="select" class="form-control">
+            <option>5</option>
+            <option>4</option>
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+          </select>
+        </div>
+        <div class="form-group mt-4 mx-4">
+          <label for="exampleFormControlTextarea1">Review</label>
+          <textarea
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="2"
+            placeholder="Write your review..."
+          ></textarea>
+        </div>
+      </div>
+      <div class="button">
+        <button class="btn m-3">Submit</button>
+      </div>
+    </div>
+
+    <div class="reviews">
+      <!-- start review -->
+      <div class="review">
+        <h5>Username | Rating 4</h5>
+        <h6>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+          labore ab facere velit nostrum adipisci consectetur, blanditiis
+          nesciunt recusandae porro excepturi, magni error ipsum? A nostrum
+          sapiente odio corrupti et!
+        </h6>
+      </div>
+      <!-- end review -->
+
+      <!-- start review -->
+      <div class="review">
+        <h5>Username | Rating 4</h5>
+        <h6>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+          labore ab facere velit nostrum adipisci consectetur, blanditiis
+          nesciunt recusandae porro excepturi, magni error ipsum? A nostrum
+          sapiente odio corrupti et!
+        </h6>
+      </div>
+      <!-- end review -->
+    </div>
+  </div>
+</div>
+{%endblock%}

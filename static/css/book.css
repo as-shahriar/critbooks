@@ -1,0 +1,111 @@
+nav {
+  background-image: none;
+}
+
+.search-box {
+  display: flex;
+  justify-content: center;
+  max-width: 26rem;
+  margin: 0.8rem;
+  position: absolute;
+  top: 0;
+  left: 1.1rem;
+}
+
+.search-box div img {
+  max-width: 3rem;
+  max-height: auto;
+}
+
+.search-box .form-control {
+  margin: 0 1rem;
+  background-color: #fff;
+  color: rgb(17, 17, 17);
+}
+
+.search-box .form-control::placeholder {
+  color: #000;
+  opacity: 0.5;
+}
+
+.info-section {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+.form-control,
+.form-control:focus {
+  background-color: #fff;
+  color: rgb(17, 17, 17);
+}
+.myreview-box {
+  background-color: #fff;
+  box-shadow: 1px 1px 2px #0000001c;
+  padding: 0.5rem;
+}
+.myreview {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#select {
+  cursor: pointer;
+}
+
+select:-moz-focusring {
+  color: transparent !important;
+  text-shadow: 0 0 0 #000;
+}
+
+select {
+  text-align-last: center;
+}
+
+.form-control::placeholder {
+  color: #000;
+  opacity: 0.5;
+}
+
+.reviews {
+  margin-top: 2.5rem;
+}
+
+.review {
+  padding: 1.5rem;
+  background-color: #fff;
+  box-shadow: 1px 1px 2px #0000001c;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 800px) {
+  .search-box {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    position: relative;
+  }
+
+  .search-box .form-control {
+    margin: 1rem 1rem;
+  }
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .info-section {
+    margin-top: 2.5rem;
+    display: block;
+  }
+
+  .myreview {
+    display: block;
+  }
+}

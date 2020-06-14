@@ -6,7 +6,9 @@ template%}
 <div class="main">
   <div class="search-box">
     <div>
-      <img src="{{url_for('static',filename='img/logo.png')}}" alt="logo" />
+      <a href="{{url_for('search')}}">
+        <img src="{{url_for('static',filename='img/logo.png')}}" alt="logo"
+      /></a>
     </div>
 
     <input type="text" class="form-control" placeholder="Search your Book" />
@@ -14,18 +16,21 @@ template%}
   </div>
   <div class="results">
     <p>69 results found</p>
+
     <div class="boxs">
       <!-- card start -->
-      <div class="mycard">
-        <blockquote class="blockquote mb-0">
-          <p>
-            Krondor: The Betrayal | Raymond E. Feist
-          </p>
-          <footer class="blockquote-footer">
-            Published on 1998 | ISBN 380795272
-          </footer>
-        </blockquote>
-      </div>
+      <a href="{{url_for('book')}}">
+        <div class="mycard">
+          <blockquote class="blockquote mb-0">
+            <p>
+              Krondor: The Betrayal | Raymond E. Feist
+            </p>
+            <footer class="blockquote-footer">
+              Published on 1998 | ISBN 380795272
+            </footer>
+          </blockquote>
+        </div>
+      </a>
       <!-- card end -->
     </div>
   </div>

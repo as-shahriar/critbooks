@@ -13,10 +13,10 @@ body {
   display: flex;
   justify-content: center;
   max-width: 26rem;
-  margin: 1.2rem;
+  margin: 0.8rem;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 1.1rem;
 }
 
 .search-box div img {
@@ -39,8 +39,15 @@ body {
   min-width: 90vw;
 }
 
+.boxs a {
+  text-decoration: none;
+  color: rgb(24, 24, 24);
+  outline: none;
+}
+
 .results > p {
   margin: 1rem 0;
+  color: rgba(0, 0, 0, 0.466);
 }
 
 .mycard {
@@ -68,7 +75,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 1rem;
+    margin-top: 0;
     position: relative;
   }
 

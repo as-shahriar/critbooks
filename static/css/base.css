@@ -27,6 +27,9 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
+a {
+  outline: none;
+}
 nav {
   display: flex;
   justify-content: flex-end;

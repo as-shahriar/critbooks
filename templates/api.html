@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {%block title%}API Doc{%endblock%} {% block template
+%}
+<style>
+  nav {
+    background-image: none;
+  }
+  span {
+    margin-left: 2rem;
+  }
+
+  .digit {
+    color: rgb(1, 189, 189);
+    margin-left: 0;
+  }
+</style>
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h2>API Documentation</h2>
+      <hr />
+      Make a GET request to <code>/api/&lt;isbn&gt;</code> route, where
+      <code>&lt;isbn&gt;</code> is an ISBN number.
+      <hr />
+      JSON
+      <br />
+      <code
+        >{<br />
+        <span>"title": "Memory",</span> <br /><span
+          >"author": "Doug Lloyd",</span
+        >
+        <br /><span>"year": <span class="digit">2020</span>,</span> <br /><span
+          >"isbn": "1632168146",</span
+        >
+        <br /><span>"review_count": <span class="digit">28</span>,</span>
+        <br /><span>"average_score": <span class="digit">5.0</span></span>
+        <br />}
+      </code>
+    </div>
+  </div>
+</div>
+>{%endblock%}
