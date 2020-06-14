@@ -19,16 +19,25 @@ body {
   background-size: cover;
   height: 100vh;
 
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  /* -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-touch-callout: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;
+  user-select: none; */
 }
 a {
   outline: none;
+}
+
+.error {
+  color: #fff;
+  background-image: linear-gradient(to right, #771d32cc, #e65758bf);
+  border-radius: 6px;
+  padding: 0.4rem;
+  margin: 0.3rem 0;
+  text-align: center;
 }
 nav {
   display: flex;
