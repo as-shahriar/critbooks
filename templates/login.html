@@ -2,11 +2,21 @@
 
 <style>
   body {
-    background-image: url("{{url_for("static",filename="img/bg.jpg")}}");
+    background-image: linear-gradient(
+        to right,
+        rgba(13, 6, 54, 0.219),
+        rgba(43, 5, 5, 0.123)
+      ),
+      url("{{url_for('static',filename='img/bg.jpg')}}");
   }
 </style>
 <div class="mycontainer">
-  <div class="left"></div>
+  <div class="left">
+    <div>
+      <img src="{{url_for('static',filename='img/logo.png')}}" alt="logo" />
+      <h2>Book Review & Rating</h2>
+    </div>
+  </div>
   <div class="right">
     <div class="login-box">
       <h3 align="center">Login</h3>

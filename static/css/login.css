@@ -98,6 +98,28 @@ nav ul li a:hover {
   opacity: 0.5;
 }
 
+.left {
+  min-height: 80vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.left div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.left div img {
+  max-width: 12rem;
+  max-height: auto;
+}
+
+.left div h2 {
+  font-size: 1.5rem;
+  color: var(--secondary);
+}
+
 @media (max-width: 800px) {
   .left {
     display: none;
