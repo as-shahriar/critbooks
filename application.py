@@ -31,3 +31,7 @@ def login():
 @app.route("/signup")
 def signup():
     return render_template('signup.html')
+
+@app.route("/books")
+def books():
+    return render_template('books.html')

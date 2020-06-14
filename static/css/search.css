@@ -24,3 +24,9 @@
   margin: 1rem 0;
   width: 20rem;
 }
+
+@media (max-width: 800px) {
+  .search input {
+    width: 90%;
+  }
+}
