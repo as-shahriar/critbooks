@@ -1,31 +1,44 @@
-{%extends 'base.html'%} {%block title%}Book Name{%endblock%}{%block template%}
+{%extends 'base.html'%} {%block title%}{% if obj_book %}{{obj_book.title}} |
+{{obj_book.author}}{%endif%}{%endblock%}{%block template%}
 <link rel="stylesheet" href="{{ url_for('static',filename='css/book.css')}}" />
 <div class="main">
-  <div class="search-box">
-    <div>
-      <a href="{{url_for('search')}}">
-        <img src="{{url_for('static',filename='img/logo.png')}}" alt="logo"
-      /></a>
+  <form action="/books">
+    <div class="search-box">
+      <div>
+        <a href="{{url_for('search')}}">
+          <img src="{{url_for('static',filename='img/logo.png')}}" alt="logo"
+        /></a>
+      </div>
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search your Book"
+        name="search"
+      />
+      <div><button class="btn">Search</button></div>
     </div>
+  </form>
 
-    <input type="text" class="form-control" placeholder="Search your Book" />
-    <div><button class="btn">Search</button></div>
-  </div>
-
-  <div class="container">
+  <div class="container mt-5">
+    {% if obj_book %}
     <div class="info-section">
       <div class="info">
-        <h2>Book Name</h2>
-        <p>Author | year | ISBN</p>
+        <h2>{{obj_book.title}}</h2>
+        <p>{{obj_book.author}} | {{obj_book.year}} | {{obj_book.isbn}}</p>
       </div>
       <div class="rating">
         <img
           src="{{url_for('static',filename='img/goodreads.png')}}"
           alt="logo"
         />
-        <h5>4.5 by 65 people</h5>
+        <p align="center">
+          Rating {{rating}} / 5 <br />by <br />{{count}} people
+        </p>
       </div>
     </div>
+    {% if session['logged_in']%}
+    <hr />
 
     <div class="myreview-box">
       <div class="myreview">
@@ -53,7 +66,15 @@
         <button class="btn m-3">Submit</button>
       </div>
     </div>
-
+    {%else%}
+    <hr />
+    <div class="login-msg">
+      <a href="{{url_for('login', next=obj_book.isbn)}}">Login</a> or
+      <a href="{{url_for('signup',next=obj_book.isbn)}}">Sign up</a> To give
+      your review
+    </div>
+    <hr />
+    {% endif%}
     <div class="reviews">
       <!-- start review -->
       <div class="review">
@@ -79,6 +100,9 @@
       </div>
       <!-- end review -->
     </div>
+    {%else%}
+    <div class="error">404 Not Found</div>
+    {%endif%}
   </div>
 </div>
 {%endblock%}

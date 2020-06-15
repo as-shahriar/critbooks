@@ -26,7 +26,7 @@
       <div class="error">{{message}}</div>
       {%endif%}
       <div class="login">
-        <form method="POST" action="/signup">
+        <form method="POST" action="{{ url_for('signup', next=next) }}">
           <div class="form-group">
             <label for="exampleInputEmail1">Username</label>
             <input

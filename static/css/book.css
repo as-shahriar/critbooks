@@ -50,6 +50,15 @@ nav {
   height: auto;
   margin-bottom: 0.5rem;
 }
+
+.login-msg {
+  margin-top: 1rem;
+  text-align: center;
+}
+.login-msg a {
+  text-decoration: none;
+  color: var(--secondary);
+}
 .myreview-box {
   background-color: #fff;
   box-shadow: 1px 1px 2px #0000001c;

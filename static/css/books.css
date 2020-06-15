@@ -37,6 +37,7 @@ body {
 
 .boxs {
   min-width: 90vw;
+  margin: 1rem;
 }
 
 .boxs a {
@@ -46,8 +47,15 @@ body {
 }
 
 .results > p {
-  margin: 1rem 0;
+  margin: 1.5rem 2rem;
   color: rgba(0, 0, 0, 0.466);
+}
+
+.not-found {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  color: #7e7e7e96;
 }
 
 .mycard {
@@ -58,10 +66,13 @@ body {
   padding: 1rem;
   cursor: pointer;
   box-shadow: 1px 1px 2px #0000001c;
+  margin-bottom: 0.6rem;
+  transition: all 0.1s;
 }
 
 .mycard:hover {
   box-shadow: 1px 1px 1px #00010069;
+  background: #f4f4f4;
 }
 
 @media (max-width: 800px) {

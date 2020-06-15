@@ -14,11 +14,20 @@
   }
 </style>
 <div class="container">
-  <div class="search">
-    <img src="{{url_for('static',filename='img/logo.png')}}" alt="logo" />
-    <input type="text" class="form-control" placeholder="Search your Book" />
-    <button class="btn">Search</button>
-  </div>
+  <form action="/books">
+    <div class="search">
+      <img src="{{url_for('static',filename='img/logo.png')}}" alt="logo" />
+
+      <input
+        type="text"
+        class="form-control"
+        name="search"
+        placeholder="Search your Book"
+        required
+      />
+      <button class="btn">Search</button>
+    </div>
+  </form>
   <div>
     {%endblock%}
   </div>

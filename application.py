@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 import hashlib
 import os
+import requests
 
 app = Flask(__name__)
 
@@ -41,6 +42,7 @@ def search():
 
 @app.route("/login",methods=['GET','POST'])
 def login():
+    isbn = request.args.get('next')
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -49,12 +51,15 @@ def login():
             return render_template('login.html',message="Wrong Username or Password.")
         session['logged_in'] = True
         session['username'] = request.form['username']
+        if isbn:
+            return redirect(url_for("book",isbn=isbn))
         return redirect(url_for("search"))
 
-    return render_template('login.html')
+    return render_template('login.html',next=isbn)
 
 @app.route("/signup",methods=['GET','POST'])
 def signup():
+    isbn = request.args.get('next')
     if request.method == 'POST':
         username = request.form.get('username')
         password1 = request.form.get('password1')
@@ -70,18 +75,45 @@ def signup():
             db.commit()
             session['logged_in'] = True
             session['username'] = username
+            if isbn:
+                return redirect(url_for("book",isbn=isbn))
             return redirect(url_for("search"))
         except:
             return render_template('signup.html',message="Server Error.")
-    return render_template('signup.html')
+    return render_template('signup.html',next=isbn)
+
+
 
 @app.route("/books")
 def books():
+    q = request.args.get('search')
+    if q != None:
+        q = q.strip()
+        obj_books = db.execute("select * from books where isbn ILIKE :q or title ILIKE :q or  author ILIKE :q or year ILIKE :q;",{'q':q}).fetchall() 
+        count = len(obj_books)
+        if count == 0:
+            return render_template('books.html',q=q,count=count,message="404 Not Found")
+
+
+        
+        return render_template('books.html',q=q,count=count,obj_books=obj_books)
     return render_template('books.html')
 
-@app.route("/book")
-def book():
-    return render_template('book.html')
+
+@app.route("/book/<isbn>")
+def book(isbn):
+    res = db.execute("select * from books where isbn=:isbn;",{'isbn':isbn}).fetchone() 
+    if res==None:
+        return render_template('book.html')
+    try:
+        response = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": os.getenv("KEY"), "isbns": isbn})
+        value = response.json().get('books')[0]
+        count = value.get('work_ratings_count')
+        rating = value.get('average_rating')
+    except:
+        count = "loading"
+        rating = "loading"
+    return render_template('book.html',obj_book=res,count=count,rating=rating)
 
 
 
