@@ -22,9 +22,11 @@
   <div class="right">
     <div class="login-box">
       <h3 align="center">Login</h3>
-      <div class="error">Wrong Username or Password.</div>
+      {% if message %}
+      <div class="error">{{message}}</div>
+      {%endif%}
       <div class="login">
-        <form method="POST">
+        <form method="POST" action="/login">
           <div class="form-group">
             <label for="exampleInputEmail1">Username</label>
             <input
@@ -32,6 +34,7 @@
               class="form-control"
               id="exampleInputEmail1"
               placeholder="Enter Username"
+              name="username"
               required
             />
           </div>
@@ -42,6 +45,7 @@
               class="form-control"
               id="exampleInputPassword1"
               placeholder="Enter Password"
+              name="password"
               required
             />
           </div>

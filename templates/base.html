@@ -8,6 +8,7 @@
       href="{{url_for('static',filename='img/logo.png')}}"
       type="image/x-icon"
     />
+
     <title>{%block title%}{%endblock%}</title>
 
     <link
@@ -22,11 +23,19 @@
   <body>
     <nav>
       <ul>
+        {% if session['logged_in']%}
+        <li>
+          <a href="#">Welcome, {{session['username']}}</a>
+        </li>
+        {% endif %}
         <li><a href="{{url_for('search')}}">Search</a></li>
         <li><a href="{{url_for('api')}}">API</a></li>
+        {% if not session['logged_in']%}
         <li><a href="{{url_for('login')}}">Login</a></li>
         <li><a href="{{url_for('signup')}}">Sign up</a></li>
-        <li><a href="#">Logout</a></li>
+        {%else%}
+        <li><a href="{{url_for('logout')}}">Logout</a></li>
+        {% endif %}
       </ul>
     </nav>
     {% block template %}{%endblock%}
