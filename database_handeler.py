@@ -4,6 +4,7 @@ import os
 import csv
 
 engine = create_engine(os.getenv("DATABASE_URL"))
+
 db = scoped_session(sessionmaker(bind=engine)) 
 
 
@@ -34,9 +35,9 @@ def create_user_table():
     """Create User Table"""
     global db
     create_user_table = """
-    CREATE TABLE users2 (
+    CREATE TABLE users (
           id SERIAL PRIMARY KEY,
-          username VARCHAR NOT NULL,
+          username VARCHAR NOT NULL unique,
           password VARCHAR NOT NULL
       );
     """
@@ -49,7 +50,7 @@ def create_book_table():
     """Create Book Table"""
     global db
     create_book_table = """
-    CREATE TABLE books2 (
+    CREATE TABLE books (
           id SERIAL PRIMARY KEY,
           isbn VARCHAR NOT NULL,
           title VARCHAR NOT NULL,
@@ -61,11 +62,27 @@ def create_book_table():
     db.commit()
     print("Book Table Created")
 
-
+def create_review_table():
+    """Create review Table"""
+    global db
+    create_book_table = """
+    CREATE TABLE review (
+          id SERIAL PRIMARY KEY,
+          username VARCHAR NOT NULL,
+          review VARCHAR NOT NULL,
+          rating VARCHAR NOT NULL,
+          book_id INT NOT NULL
+      );
+    """
+    db.execute(create_book_table)
+    db.commit()
+    print("Review Table Created")
 
 
 if __name__ == '__main__':
-    create_book_table()
     create_user_table()
+    create_book_table()
+    create_review_table()
     add_books()
+    
 

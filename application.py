@@ -100,11 +100,48 @@ def books():
     return render_template('books.html')
 
 
-@app.route("/book/<isbn>")
+@app.route("/book/<isbn>",methods=['GET','POST'])
 def book(isbn):
+    message = None
+    is_reviewed = False
+    if request.method == "POST" and session['logged_in']:
+        my_rating = request.form.get('rating')
+        my_review = request.form.get('review')
+        book_id = request.form.get('book_id')
+        if my_review.strip()=="" or my_rating=="":
+            message = "Invalid Review"
+        else:
+            db.execute("insert into review (username, review, rating, book_id) select :username,:review,:rating,:book_id where not exists (select * from review where username = :username and book_id = :book_id);",
+            {
+                'username': session['username'],
+                'review': my_review,
+                'rating':my_rating,
+                'book_id': book_id    
+            })
+            db.commit()
+            is_reviewed = True
+
+
+
     res = db.execute("select * from books where isbn=:isbn;",{'isbn':isbn}).fetchone() 
     if res==None:
         return render_template('book.html')
+    
+
+
+    reviews = db.execute("select * from review where book_id=:id;",{'id':res.id}).fetchall()
+    if request.method == "GET":
+        try:
+            if session['logged_in']:
+                check_review = db.execute("select username from review where book_id=:id and username=:username;",
+            {
+                'id':res.id,
+                'username': session['username']  
+            }).fetchone()
+                if check_review != None:
+                    is_reviewed = True
+        except:
+            pass
     try:
         response = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": os.getenv("KEY"), "isbns": isbn})
         value = response.json().get('books')[0]
@@ -113,7 +150,7 @@ def book(isbn):
     except:
         count = "loading"
         rating = "loading"
-    return render_template('book.html',obj_book=res,count=count,rating=rating)
+    return render_template('book.html',obj_book=res,count=count,rating=rating,reviews=reviews,message=message,is_reviewed=is_reviewed)
 
 
 

@@ -37,36 +37,44 @@
         </p>
       </div>
     </div>
-    {% if session['logged_in']%}
+    {% if session['logged_in'] and not(is_reviewed) %}
     <hr />
-
-    <div class="myreview-box">
-      <div class="myreview">
-        <div class="mt-4 mx-4">
-          <label for="select">Rating</label>
-          <select id="select" class="form-control">
-            <option>5</option>
-            <option>4</option>
-            <option>3</option>
-            <option>2</option>
-            <option>1</option>
-          </select>
+    <form action="{{url_for('book',isbn=obj_book.isbn)}}" method="POST">
+      <input type="hidden" name="book_id" value="{{obj_book.id}}" />
+      <div class="myreview-box">
+        {%if message %}
+        <div class="error">
+          {{message}}
         </div>
-        <div class="form-group mt-4 mx-4">
-          <label for="exampleFormControlTextarea1">Review</label>
-          <textarea
-            class="form-control"
-            id="exampleFormControlTextarea1"
-            rows="2"
-            placeholder="Write your review..."
-          ></textarea>
+        {%endif%}
+        <div class="myreview">
+          <div class="mt-4 mx-4">
+            <label for="select">Rating</label>
+            <select id="select" class="form-control" name="rating">
+              <option>5</option>
+              <option>4</option>
+              <option>3</option>
+              <option>2</option>
+              <option>1</option>
+            </select>
+          </div>
+          <div class="form-group mt-4 mx-4">
+            <label for="exampleFormControlTextarea1">Review</label>
+            <textarea
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              rows="2"
+              name="review"
+              placeholder="Write your review..."
+            ></textarea>
+          </div>
+        </div>
+        <div class="button">
+          <button class="btn m-3">Submit</button>
         </div>
       </div>
-      <div class="button">
-        <button class="btn m-3">Submit</button>
-      </div>
-    </div>
-    {%else%}
+    </form>
+    {%elif not( session['logged_in'])%}
     <hr />
     <div class="login-msg">
       <a href="{{url_for('login', next=obj_book.isbn)}}">Login</a> or
@@ -76,29 +84,16 @@
     <hr />
     {% endif%}
     <div class="reviews">
+      {% if reviews %} {%for review in reviews%}
       <!-- start review -->
       <div class="review">
-        <h5>Username | Rating 4</h5>
+        <h5>{{review.username}} | Rating {{review.rating}}</h5>
         <h6>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-          labore ab facere velit nostrum adipisci consectetur, blanditiis
-          nesciunt recusandae porro excepturi, magni error ipsum? A nostrum
-          sapiente odio corrupti et!
+          {{review.review}}
         </h6>
       </div>
       <!-- end review -->
-
-      <!-- start review -->
-      <div class="review">
-        <h5>Username | Rating 4</h5>
-        <h6>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-          labore ab facere velit nostrum adipisci consectetur, blanditiis
-          nesciunt recusandae porro excepturi, magni error ipsum? A nostrum
-          sapiente odio corrupti et!
-        </h6>
-      </div>
-      <!-- end review -->
+      {%endfor%} {%endif%}
     </div>
     {%else%}
     <div class="error">404 Not Found</div>
