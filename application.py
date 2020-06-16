@@ -88,8 +88,8 @@ def signup():
 def books():
     q = request.args.get('search')
     if q != None:
-        q = q.strip()
-        obj_books = db.execute("select * from books where isbn ILIKE :q or title ILIKE :q or  author ILIKE :q or year ILIKE :q;",{'q':q}).fetchall() 
+        q = q.strip().replace("'","")
+        obj_books = db.execute("select * from books where isbn LIKE ('%"+q+"%')  or lower(title) LIKE lower('%"+q+"%') or  lower(author) LIKE lower('%"+q+"%') or (year = '"+q+"') order by year desc;").fetchall() 
         count = len(obj_books)
         if count == 0:
             return render_template('books.html',q=q,count=count,message="404 Not Found")
