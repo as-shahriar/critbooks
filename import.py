@@ -70,7 +70,7 @@ def create_review_table():
           id SERIAL PRIMARY KEY,
           username VARCHAR NOT NULL,
           review VARCHAR NOT NULL,
-          rating VARCHAR NOT NULL,
+          rating INTEGER NOT NULL,
           book_id INT NOT NULL
       );
     """
@@ -80,9 +80,9 @@ def create_review_table():
 
 
 if __name__ == '__main__':
-    create_user_table()
-    create_book_table()
+    # create_user_table()
+    # create_book_table()
     create_review_table()
-    add_books()
+    # add_books()
     
 

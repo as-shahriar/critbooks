@@ -7,6 +7,7 @@ import hashlib
 import os
 import requests
 
+
 app = Flask(__name__)
 
 # Check for environment variable
@@ -38,6 +39,10 @@ def get_goodreads_data(isbn):
     count = value.get('work_ratings_count')
     rating = value.get('average_rating')
     return [count,rating]
+
+def get_review_statistics(book_id):
+    res = db.execute("SELECT count(review),round(avg(rating),2) FROM review where book_id=:id;",{'id':book_id}).fetchone()
+    return [res.count,float(str(res.round))]
 @app.route("/")
 def search():
     return render_template('search.html')
@@ -109,7 +114,7 @@ def book(isbn):
     error = False
     is_reviewed = False
     if request.method == "POST" and session['logged_in']:
-        my_rating = request.form.get('rating')
+        my_rating = int(request.form.get('rating'))
         my_review = request.form.get('review')
         book_id = request.form.get('book_id')
         if my_review.strip()=="" or my_rating=="":
@@ -167,8 +172,9 @@ def api_url(isbn):
         return jsonify({
             "error": "Invalid isbn.",
             "Message": "See documentation at '/api'"
-            }),422
-    count,rating = get_goodreads_data(isbn)
+            }),404
+        
+    count,rating = get_review_statistics(res.id)
     return jsonify({
         "title": res.title,
         "author": res.author,
