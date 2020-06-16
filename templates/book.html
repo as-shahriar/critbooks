@@ -27,15 +27,17 @@
         <h2>{{obj_book.title}}</h2>
         <p>{{obj_book.author}} | {{obj_book.year}} | {{obj_book.isbn}}</p>
       </div>
+      {% if not(error) %}
       <div class="rating">
         <img
           src="{{url_for('static',filename='img/goodreads.png')}}"
           alt="logo"
         />
         <p align="center">
-          Rating {{rating}} / 5 <br />by <br />{{count}} people
+          Rating {{rating}} / 5 by {{count}} people
         </p>
       </div>
+      {%endif%}
     </div>
     {% if session['logged_in'] and not(is_reviewed) %}
     <hr />
@@ -83,14 +85,12 @@
     </div>
     <hr />
     {% endif%}
-    <div class="reviews">
+    <div class="reviews mb-5">
       {% if reviews %} {%for review in reviews%}
       <!-- start review -->
       <div class="review">
         <h5>{{review.username}} | Rating {{review.rating}}</h5>
-        <h6>
-          {{review.review}}
-        </h6>
+        <h6>{{review.review}}</h6>
       </div>
       <!-- end review -->
       {%endfor%} {%endif%}

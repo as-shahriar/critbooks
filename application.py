@@ -1,5 +1,5 @@
 
-from flask import Flask, session,render_template,request,redirect,url_for
+from flask import Flask, session,render_template,request,redirect,url_for,jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -32,7 +32,12 @@ def password_hash(password):
     hashed_password = hashlib.md5(slat_password.encode())
     return hashed_password.hexdigest()
 
-
+def get_goodreads_data(isbn):
+    response = requests.get("https://www.goodreads.com/book/review_counts.json", params={ "isbns": isbn})
+    value = response.json().get('books')[0]
+    count = value.get('work_ratings_count')
+    rating = value.get('average_rating')
+    return [count,rating]
 @app.route("/")
 def search():
     return render_template('search.html')
@@ -66,9 +71,7 @@ def signup():
         password2 = request.form.get('password2')
         if password1!=password2:
             return render_template('signup.html',message="Password did not match.")
-       
-        if db.execute('select username from users where username=:username;',{'username':username}).rowcount !=0:
-            return render_template('signup.html',message="Username Exists. Try Another.")
+           
         try:
             password = password_hash(password1)
             user = db.execute("insert into users (username,password) values(:username ,:password);",{'username':username,'password':password})
@@ -79,7 +82,7 @@ def signup():
                 return redirect(url_for("book",isbn=isbn))
             return redirect(url_for("search"))
         except:
-            return render_template('signup.html',message="Server Error.")
+            return render_template('signup.html',message="Username Exists. Try Another.")
     return render_template('signup.html',next=isbn)
 
 
@@ -103,6 +106,7 @@ def books():
 @app.route("/book/<isbn>",methods=['GET','POST'])
 def book(isbn):
     message = None
+    error = False
     is_reviewed = False
     if request.method == "POST" and session['logged_in']:
         my_rating = request.form.get('rating')
@@ -143,20 +147,36 @@ def book(isbn):
         except:
             pass
     try:
-        response = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": os.getenv("KEY"), "isbns": isbn})
-        value = response.json().get('books')[0]
-        count = value.get('work_ratings_count')
-        rating = value.get('average_rating')
+        count,rating = get_goodreads_data(isbn)
     except:
-        count = "loading"
-        rating = "loading"
-    return render_template('book.html',obj_book=res,count=count,rating=rating,reviews=reviews,message=message,is_reviewed=is_reviewed)
+        error = True
+        count,rating = 0,0
+    return render_template('book.html',obj_book=res,count=count,rating=rating,reviews=reviews,message=message,is_reviewed=is_reviewed,error=error)
 
 
 
 @app.route("/api")
 def api():
     return render_template('api.html')
+
+
+@app.route("/api/<isbn>")
+def api_url(isbn):
+    res = db.execute("select * from books where isbn=:isbn;",{'isbn':isbn}).fetchone()
+    if res == None:
+        return jsonify({
+            "error": "Invalid isbn.",
+            "Message": "See documentation at '/api'"
+            }),422
+    count,rating = get_goodreads_data(isbn)
+    return jsonify({
+        "title": res.title,
+        "author": res.author,
+        "year": res.year,
+        "isbn": res.isbn,
+        "review_count": count,
+        "average_score": rating
+    }),200
 
 
 
