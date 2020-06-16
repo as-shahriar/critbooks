@@ -173,8 +173,11 @@ def api_url(isbn):
             "error": "Invalid isbn.",
             "Message": "See documentation at '/api'"
             }),404
-        
-    count,rating = get_review_statistics(res.id)
+    try:
+        count,rating = get_review_statistics(res.id)
+    except:
+        count,rating = 0,0
+    
     return jsonify({
         "title": res.title,
         "author": res.author,
@@ -188,8 +191,8 @@ def api_url(isbn):
 
 @app.route("/logout")
 def logout():
-    session['logged_in'] = False
-    session['username'] = ""
+    
+    session.clear()
     return redirect(url_for("login"))
 
 
