@@ -9,6 +9,8 @@ import requests
 
 
 app = Flask(__name__)
+if not os.getenv("DATABASE_URL"):
+    raise RuntimeError("DATABASE_URL is not set")
 
 # Check for environment variable
 # if not os.getenv("DATABASE_URL"):
@@ -97,7 +99,7 @@ def books():
     q = request.args.get('search')
     if q != None:
         q = q.strip().replace("'","")
-        obj_books = db.execute("select * from books where isbn LIKE ('%"+q+"%')  or lower(title) LIKE lower('%"+q+"%') or  lower(author) LIKE lower('%"+q+"%') or (year = '"+q+"') order by year desc;").fetchall() 
+        obj_books = db.execute("select * from books where isbn LIKE ('%"+q+"%')  or lower(title) LIKE lower('%"+q+"%') or  lower(author) LIKE lower('%"+q+"%') order by year desc;").fetchall() 
         count = len(obj_books)
         if count == 0:
             return render_template('books.html',q=q,count=count,message="404 Not Found")

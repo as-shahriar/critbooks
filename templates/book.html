@@ -89,7 +89,7 @@
       {% if reviews %} {%for review in reviews%}
       <!-- start review -->
       <div class="review">
-        <h5>{{review.username}} | Rating {{review.rating}}</h5>
+        <h5>{{review.username}} | {{review.rating}}</h5>
         <h6>{{review.review}}</h6>
       </div>
       <!-- end review -->
