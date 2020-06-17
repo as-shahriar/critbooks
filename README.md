@@ -9,8 +9,10 @@ It is a book review and rating website. You can find more than 4999 books with e
 ### Installation
 
 Install all dependencies by installing `requirements.txt`
+
 Add `DATABASE_URL` to evironment variable.
-run `import.py` to setup database, create tables and import books.
+
+Run `import.py` to setup database, create tables and import books.
 
 ## Features
 
@@ -35,6 +37,7 @@ Afer user click on a specific book, it will redirect to Book page, where they ca
 ### Login
 
 `url : '/login'`
+
 User can login with their credentials. After login, it will redirect to search page. But if user come from a book page and try to login, it will redirect to that previous book page.
 
 ### Sign up
@@ -57,11 +60,11 @@ Return json data of a book by getting a `GET` request using the ISBN number.
 
 ```
 {
-"title": "Memory",
-"author": "Doug Lloyd",
-"year": 2020,
-"isbn": "1632168146",
-"review_count": 28,
-"average_score": 5.0
+    "title": "Memory",
+    "author": "Doug Lloyd",
+    "year": 2020,
+    "isbn": "1632168146",
+    "review_count": 28,
+    "average_score": 5.0
 }
 ```
