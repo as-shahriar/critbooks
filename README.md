@@ -4,7 +4,7 @@
 
 Web Programming with Python and JavaScript
 
-It is a book review and rating website. You can find more than 4999 books with exclusive reviews and ratings. Also you can find ratings from a lot of readers through [goodreads](https://goodreads.com).
+It is a book review and rating website using Flask and Postgres. You can find more than 4999 books with exclusive reviews and ratings. Also you can find ratings from a lot of readers through [goodreads](https://goodreads.com).
 
 ### Installation
 
