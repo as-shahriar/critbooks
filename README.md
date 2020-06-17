@@ -1,6 +1,6 @@
 # CritBooks
 
-#### Project 1 | CS50W | Harverdx
+#### Project 1 | CS50W | Harvardx
 
 Web Programming with Python and JavaScript
 
